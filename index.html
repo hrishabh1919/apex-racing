@@ -4,15 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apex Racing - Mastering The Apex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --racing-red: #ff0033;
+      --dark-bg: #0a0a0a;
+      --content-bg: #111;
+      --text-light: #e0e0e0;
+      --text-medium: #b0b0b0;
+    }
+
     /* Reset */
     body, html {
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #0a0a0a;
-      color: #e0e0e0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-light);
       overflow-x: hidden;
+      /* scroll-behavior: smooth; is removed as Lenis will handle this */
+    }
+
+    /* Header */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: center;
+      /* PREMIUM ANIMATION: Smooth transition for hiding/showing */
+      transition: top 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-bottom: 1px solid rgba(255, 0, 51, 0.3);
+    }
+    /* PREMIUM ANIMATION: Class to hide header on scroll down */
+    .main-header--hidden {
+        top: -100px;
+    }
+    .main-header nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 400;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      position: relative;
+      padding-bottom: 5px;
+    }
+    .main-header nav a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--racing-red);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease-out;
+    }
+    .main-header nav a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px var(--racing-red);
+    }
+    .main-header nav a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
     }
 
     /* Splash Screen */
@@ -20,106 +83,183 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: #0a0a0a;
+      background: var(--dark-bg);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 20;
-      transition: opacity 1s ease-out;
+      transition: opacity 1s ease-out, visibility 1s ease-out;
       text-align: center;
     }
-    .splash-screen.hidden { opacity: 0; pointer-events: none; }
-    .logo-container { animation: pulse 1.5s infinite ease-in-out; }
+    .splash-screen.hidden { 
+      opacity: 0; 
+      visibility: hidden;
+      pointer-events: none; 
+    }
+    .logo-container { animation: engine-pulse 2s infinite ease-in-out; }
     .logo-container img { max-width: 350px; height: auto; }
     
     .tagline {
         margin-top: 25px;
         font-size: 1.5rem;
-        color: #cccccc;
+        color: var(--text-medium);
         letter-spacing: 2px;
         font-weight: 300;
+        animation: text-flicker 3s infinite;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    @keyframes engine-pulse {
+      0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--racing-red)); }
+      50% { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--racing-red)); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--racing-red)); }
+    }
+    @keyframes text-flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
     }
 
-    /* Car Background with Scroll Animations */
-    .car-background {
+    /* Hero Background */
+    .hero-background {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100vh;
-      /* --- KEY FIX HERE --- */
-      /* Set the background image directly. Assumes 'car.png' is in the same folder as index.html */
-      background-image: url('images/car.png');
+      background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Your+Award+Image'); 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      
       z-index: 1;
-      opacity: 1; /* Start completely invisible */
-      transform: scale(1); /* Start at normal size */
-      /* Smooth transitions for opacity and transform */
-      transition: opacity 1s ease-in-out, transform 0.5s ease-out;
+      opacity: 0; 
+      transform: scale(1);
+      transition: opacity 1.5s ease-in-out; /* Only transition opacity now */
+      will-change: transform, opacity;
     }
     
-    /* Right-to-Left Scrolling Overlay Message */
+    /* Scrolling Message */
     .scroll-message-container {
       position: fixed;
-      top: 50%;
-      left: 0;
+      top: 50%; left: 0;
       width: 100%;
       transform: translateY(-50%);
       z-index: 3;
       pointer-events: none;
       overflow: hidden;
     }
-
     .scroll-message {
-      font-size: 5vw;
-      font-weight: bold;
-      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 6vw;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
       white-space: nowrap;
       text-transform: uppercase;
-      transform: translateX(100%);
+      transform: translateX(100%) skewX(-15deg);
+      will-change: transform;
+      text-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
     }
 
     /* Main Content */
     .main-content {
       position: relative;
       z-index: 2;
-      background: #0a0a0a;
+      background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+      background-color: #050505;
     }
     .content-section {
-      padding: 100px 10%;
+      /* MODIFICATION: Made more compact */
+      padding: 50px 7%;
       max-width: 900px;
-      margin: 0 auto;
+      margin: 70px auto;
+      background-color: rgba(17, 17, 17, 0.8);
+      backdrop-filter: blur(5px);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 0, 51, 0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255, 0, 51, 0.1);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
     }
+    /* MODIFICATION: Corrected hover animation to lift up and be more responsive */
+    .content-section:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 30px var(--racing-red);
+    }
+    .content-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* PREMIUM ANIMATION: Staggered animation for content */
+    .content-section h2, .content-section p, .content-section b {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s;
+    }
+    .content-section.visible h2, .content-section.visible p, .content-section.visible b {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Stagger delay */
+    .content-section.visible p { transition-delay: 0.5s; }
+    .content-section.visible b { transition-delay: 0.4s; }
+
     .content-section h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      border-left: 4px solid #00ff99;
-      padding-left: 15px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 30px;
+      padding-left: 0;
+      border-left: none;
+      color: #fff;
+      text-transform: uppercase;
+      display: inline-block;
+      border-bottom: 3px solid var(--racing-red);
+      padding-bottom: 10px;
+      text-shadow: 0 0 10px var(--racing-red);
+      /* MODIFICATION: Added transition for hover effect */
+      transition: color 0.4s ease, text-shadow 0.4s ease;
     }
-    .content-section p {
+    /* MODIFICATION: Added elegant heading glow on hover */
+    .content-section:hover h2 {
+        color: var(--racing-red);
+        text-shadow: 0 0 20px var(--racing-red);
+    }
+    .content-section p, .content-section b {
       font-size: 1.1rem;
+      /* MODIFICATION: Reduced line-height for compactness */
       line-height: 1.7;
-      color: #b0b0b0;
+      color: var(--text-medium);
+    }
+    .content-section b {
+        color: var(--text-light);
+        display: block;
+        margin-bottom: 1em;
+        font-weight: 700;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .logo-container, .hero-background, .main-header nav a, .scroll-message, .content-section {
+        animation: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
 <body>
+
+  <header class="main-header">
+    <nav>
+      <a href="#stem-racing">STEM Racing</a>
+      <a href="#about-us">About Us</a>
+      <a href="#apex-green">Apex Green</a>
+    </nav>
+  </header>
+
   <div class="splash-screen">
     <div class="logo-container">
-      <img src="images/logo.png" alt="Apex Racing Logo">
+      <img src="images/logo.png" alt="Apex Racing Logo" onerror="this.src='https://placehold.co/350x150/0a0a0a/FFFFFF?text=Logo+Not+Found';">
     </div>
     <h1 class="tagline">Mastering The Apex, Owning The Finish</h1>
   </div>
 
-  <div class="car-background"></div>
+  <div class="hero-background"></div>
 
   <div class="scroll-message-container">
     <div class="scroll-message">TEAM APEX RACING</div>
@@ -138,54 +278,95 @@
     <section class="content-section" id="apex-green">
       <h2>Apex Green</h2>
       <b>“Creating a Sustainable Future: Planting Trees for Today and Tomorrow”</b>
-      <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.
-</p>
+      <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.</p>
     </section>
     <div style="height:50vh;"></div>
   </div>
 
-  <script>
-    const splash = document.querySelector('.splash-screen');
-    const car = document.querySelector('.car-background');
-    const scrollMessage = document.querySelector('.scroll-message');
+  <!-- PREMIUM ANIMATION: Added Lenis for smooth scrolling -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
-    // 1. Hide splash, show car after a delay
+  <script>
+    const splashScreen = document.querySelector('.splash-screen');
+    const heroBackground = document.querySelector('.hero-background');
+    const scrollMessage = document.querySelector('.scroll-message');
+    const header = document.querySelector('.main-header');
+
+    // --- PREMIUM ANIMATION: Lenis Smooth Scroll Initialization ---
+    const lenis = new Lenis();
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    // --- End of Lenis Setup ---
+
     setTimeout(() => {
-      splash.classList.add('hidden');
-      // Set opacity to 1 to fade the car in
-      car.style.opacity = '1';
+      splashScreen.classList.add('hidden');
+      heroBackground.style.opacity = '1';
     }, 3000);
 
-    // 2. Handle all scroll-based animations
+    // --- PREMIUM ANIMATION: Hide header on scroll down ---
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        if (currentScroll > lastScroll && currentScroll > header.clientHeight) {
+            // Scrolled down
+            header.classList.add('main-header--hidden');
+        } else {
+            // Scrolled up
+            header.classList.remove('main-header--hidden');
+        }
+        lastScroll = currentScroll;
+    });
+    // --- End of Header Animation ---
+
+
+    // --- PREMIUM ANIMATION: Parallax and refined scroll effects ---
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      // Only animate if the splash screen is hidden
-      if (splash.classList.contains('hidden')) {
-          // Animation: Car scales up and fades into the background
+      if (splashScreen.classList.contains('hidden')) {
           const scrollProgress = Math.min(1, scrollPosition / windowHeight);
-          const scale = 1 + (scrollProgress * 1.5);
-          // Opacity goes from 1 (fully visible) to 0 (invisible)
+          const scale = 1 + (scrollProgress * 0.5); // Reduced scale for subtlety
           const opacity = 1 - scrollProgress;
+          const parallax = scrollPosition * 0.4; // Parallax effect
 
-          car.style.transform = `scale(${scale})`;
-          car.style.opacity = opacity;
+          // Apply scale, opacity, and parallax transform
+          heroBackground.style.transform = `translateY(${parallax}px) scale(${scale})`;
+          heroBackground.style.opacity = opacity;
       }
       
-      // Animation: Text scrolls from right to left
       const messageStart = windowHeight * 0.2;
       const messageEnd = windowHeight * 0.8;
       
       if (scrollPosition > messageStart && scrollPosition < messageEnd) {
           const messageProgress = (scrollPosition - messageStart) / (messageEnd - messageStart);
           const translateX = 100 - (messageProgress * 200);
-          scrollMessage.style.transform = `translateX(${translateX}%)`;
+          scrollMessage.style.transform = `translateX(${translateX}%) skewX(-15deg)`;
       } else if (scrollPosition <= messageStart) {
-          scrollMessage.style.transform = 'translateX(100%)';
+          scrollMessage.style.transform = 'translateX(100%) skewX(-15deg)';
       } else {
-          scrollMessage.style.transform = 'translateX(-100%)';
+          scrollMessage.style.transform = 'translateX(-100%) skewX(-15deg)';
       }
+    });
+    // --- End of Parallax ---
+
+    // --- PREMIUM ANIMATION: Intersection Observer for staggered content fade-in ---
+    const sections = document.querySelectorAll('.content-section');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.2 // Trigger when 20% of the element is visible
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
     });
   </script>
 </body>

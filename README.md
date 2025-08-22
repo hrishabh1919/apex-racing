@@ -30,12 +30,10 @@ A stunning sci-fi themed website showcasing the **Nebula** typeface with an imme
 ```
 apex-racing/
 ├── index.html          # Main HTML structure
-├── style.css           # Styling and animations
-├── script.js           # JavaScript functionality
 ├── logo.png            # Project logo
-├── car photo.png       # Racing car image
+├── car.png             # Racing car image
 ├── background-vid.mp4  # Background video
-├── Preview0001.png     # Font preview image
+├── award.jpeg          # Award image
 ├── Nebula-Regular.otf  # Regular font weight
 ├── Nebula-Hollow.otf   # Hollow font weight
 └── README.md           # This file

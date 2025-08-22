@@ -1,112 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Nebula Typeface - Dual Splash</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Racing - Mastering The Apex</title>
+  <style>
+    /* Reset */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+
+    /* Splash Screen */
+    .splash-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      transition: opacity 1s ease-out;
+      text-align: center;
+    }
+    .splash-screen.hidden { opacity: 0; pointer-events: none; }
+    .logo-container { animation: pulse 1.5s infinite ease-in-out; }
+    .logo-container img { max-width: 350px; height: auto; }
+    
+    .tagline {
+        margin-top: 25px;
+        font-size: 1.5rem;
+        color: #cccccc;
+        letter-spacing: 2px;
+        font-weight: 300;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Car Background with Scroll Animations */
+    .car-background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      /* --- KEY FIX HERE --- */
+      /* Set the background image directly. Assumes 'car.png' is in the same folder as index.html */
+      background-image: url('car.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      
+      z-index: 1;
+      opacity: 1; /* Start completely invisible */
+      transform: scale(1); /* Start at normal size */
+      /* Smooth transitions for opacity and transform */
+      transition: opacity 1s ease-in-out, transform 0.5s ease-out;
+    }
+    
+    /* Right-to-Left Scrolling Overlay Message */
+    .scroll-message-container {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+      z-index: 3;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .scroll-message {
+      font-size: 5vw;
+      font-weight: bold;
+      color: white;
+      white-space: nowrap;
+      text-transform: uppercase;
+      transform: translateX(100%);
+    }
+
+    /* Main Content */
+    .main-content {
+      position: relative;
+      z-index: 2;
+      background: #0a0a0a;
+    }
+    .content-section {
+      padding: 100px 10%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .content-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      border-left: 4px solid #00ff99;
+      padding-left: 15px;
+    }
+    .content-section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #b0b0b0;
+    }
+  </style>
 </head>
 <body>
-
-<!-- Splash Overlays -->
-<div id="splash-overlay-logo" class="splash-overlay" aria-hidden="true">
-  <div class="splash-center">
-    <img src="logo.png" alt="Nebula Logo" class="splash-logo" />
-  </div>
-</div>
-
-<div id="splash-overlay-car" class="splash-overlay" style="display:none;" aria-hidden="true">
-  <div class="splash-center">
-    <img src="car photo.png" alt="Car Splash Image" class="splash-car" />
-  </div>
-</div>
-
-<!-- Header -->
-<header>
-  <img src="logo.png" alt="Nebula Logo" class="logo" />
-  <nav>
-    <a href="#home">HOME</a>
-    <a href="#gallery">GALLERY</a>
-    <a href="#about">ABOUT</a>
-    <a href="#fonts">FONTS</a>
-  </nav>
-</header>
-
-<!-- Main Content -->
-<main class="main-split">
-  <section class="left-pane">
-
-    <!-- Hero -->
-    <section class="hero-preview-style">
-      <div class="nebula-headline">NEBULA</div>
-      <div class="nebula-sub">SCI - FI FONT</div>
-      <div class="font-weights-row">
-        <span class="weight-sample regular">REGULAR</span>
-        <span class="weight-bar"></span>
-        <span class="weight-sample bold">BOLD</span>
-        <span class="weight-bar"></span>
-        <span class="weight-sample hollow">HOLLOW</span>
-      </div>
-    </section>
-
-    <!-- Preview Section -->
-    <section class="preview-box-centered">
-      <img class="preview-img-large" src="Preview0001.png" alt="Preview Nebula Example">
-      <div class="small-caption">
-        A futuristic, sci-fi typeface, free for personal use.<br>
-        <span class="note-link" onclick="window.open('https://www.creativefabrica.com/product/nebula/ref/236744/', '_blank')">
-          Get the full version on Creative Fabrica.
-        </span>
-      </div>
-    </section>
-
-    <!-- Showcase -->
-    <section class="showcase" id="fonts">
-      <h2 style="font-family:'Nebula-Regular'; font-size:28px; margin:0 0 8px;">Font Family Preview</h2>
-      <div style="margin:10px 0 16px;">
-        <span style="font-family:'Nebula-Regular';font-size:1.5em;">Nebula Regular</span> |
-        <span style="font-family:'Nebula-Hollow';font-size:1.5em;">Nebula Hollow</span>
-      </div>
-      <hr style="border:0;border-top:1px solid #333;margin:16px 0;">
-      <h3 style="margin:0 0 8px;">Font License & Download</h3>
-      <p style="margin:0;">
-        Hello guys, thank you for downloading my product, I really appreciate you.<br>
-        Please note that this font is free for personal use only.<br>
-        <b>Full Version:</b>
-        <a href="https://www.creativefabrica.com/product/nebula/ref/236744/" target="_blank" rel="noopener">Get it here</a>
-        <br>
-        <b>More fonts:</b>
-        <a href="https://www.behance.net/fadielm70" target="_blank" rel="noopener">Behance Portfolio</a>
-      </p>
-    </section>
-
-    <!-- Carousel -->
-    <div class="carousel-wrapper">
-      <div class="carousel" id="carousel">
-        <div class="thankyou-highlight">
-          Thank you for downloading my product! 💙
-        </div>
-        Please note that this font is free for personal use only.<br>
-        <span id="carousel-msg"></span><span class="typewriter-cursor">|</span>
-      </div>
+  <div class="splash-screen">
+    <div class="logo-container">
+      <img src="logo.png" alt="Apex Racing Logo">
     </div>
+    <h1 class="tagline">Mastering The Apex, Owning The Finish</h1>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-      &copy; 2025 Nebula Typeface. Discover more fonts at
-      <a href="https://www.behance.net/fadielm70" target="_blank" rel="noopener">Behance</a> and
-      <a href="https://www.creativefabrica.com/product/nebula/ref/236744/" target="_blank" rel="noopener">Creative Fabrica</a>.
-      <br>Personal use only. All rights reserved.
-    </footer>
-  </section>
+  <div class="car-background"></div>
 
-  <!-- Right Pane -->
-  <section class="right-pane" id="gallery">
-    <video class="bg-vid" src="background-vid.mp4" autoplay muted loop playsinline></video>
-  </section>
-</main>
+  <div class="scroll-message-container">
+    <div class="scroll-message">TEAM APEX RACING</div>
+  </div>
 
-<!-- JS Script -->
-<script src="script.js"></script>
+  <div class="main-content">
+    <div style="height:100vh;"></div> <!-- Spacer -->
+    <section class="content-section" id="stem-racing">
+      <h2>Stem Racing</h2>
+      <p>STEM racing is where innovation meets speed. It’s more than just building miniature race cars—it’s about pushing the limits of Science, Technology, Engineering, and Mathematics to solve real-world challenges. Through competitions like Stem Racing, we transform ideas into high-performance machines, mastering everything from aerodynamics to branding. Along the way, we gain industry-level engineering skills, business experience, and the teamwork needed to succeed—skills that drive us both on the track and in our future careers.</p>
+    </section>
+    <section class="content-section" id="about-us">
+      <h2>About Us</h2>
+      <p>At Apex Racing, we blend passion, innovation, and precision to create high-performance miniature race cars for the STEM Racing challenge. Guided by our motto “Mastering the Apex, Owning the Finish,” we turn ideas into engineering reality—combining aerodynamics, design, and teamwork to compete at the highest level. Since our debut, we’ve proudly represented India on the world stage, with milestones including podium finishes, fastest car titles, and national championships. But for us, every award is just a checkpoint—the real race is mastering our craft, inspiring others in STEM, and pushing the boundaries of what’s possible.</p>
+    </section>
+    <section class="content-section" id="apex-green">
+      <h2>Apex Green</h2>
+      <b>“Creating a Sustainable Future: Planting Trees for Today and Tomorrow”</b>
+      <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.
+</p>
+    </section>
+    <div style="height:50vh;"></div>
+  </div>
+
+  <script>
+    const splash = document.querySelector('.splash-screen');
+    const car = document.querySelector('.car-background');
+    const scrollMessage = document.querySelector('.scroll-message');
+
+    // 1. Hide splash, show car after a delay
+    setTimeout(() => {
+      splash.classList.add('hidden');
+      // Set opacity to 1 to fade the car in
+      car.style.opacity = '1';
+    }, 3000);
+
+    // 2. Handle all scroll-based animations
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      // Only animate if the splash screen is hidden
+      if (splash.classList.contains('hidden')) {
+          // Animation: Car scales up and fades into the background
+          const scrollProgress = Math.min(1, scrollPosition / windowHeight);
+          const scale = 1 + (scrollProgress * 1.5);
+          // Opacity goes from 1 (fully visible) to 0 (invisible)
+          const opacity = 1 - scrollProgress;
+
+          car.style.transform = `scale(${scale})`;
+          car.style.opacity = opacity;
+      }
+      
+      // Animation: Text scrolls from right to left
+      const messageStart = windowHeight * 0.2;
+      const messageEnd = windowHeight * 0.8;
+      
+      if (scrollPosition > messageStart && scrollPosition < messageEnd) {
+          const messageProgress = (scrollPosition - messageStart) / (messageEnd - messageStart);
+          const translateX = 100 - (messageProgress * 200);
+          scrollMessage.style.transform = `translateX(${translateX}%)`;
+      } else if (scrollPosition <= messageStart) {
+          scrollMessage.style.transform = 'translateX(100%)';
+      } else {
+          scrollMessage.style.transform = 'translateX(-100%)';
+      }
+    });
+  </script>
 </body>
 </html>

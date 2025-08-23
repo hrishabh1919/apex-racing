@@ -192,24 +192,42 @@
         scrollMessage.style.transform = 'translateX(-100%)';
       }
 
-      // NEW Animation: Content sections slip up as they enter the viewport
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = rect.top;
-        const sectionHeight = rect.height;
+      const sections = document.querySelectorAll('.section');
+let ticking = false;
 
-        // Calculate a progress value for each section based on its position in the viewport
-        let sectionProgress = Math.max(0, Math.min(1, (windowHeight - sectionTop) / (windowHeight + sectionHeight)));
-        
-        const translateY = 100 * (1 - sectionProgress);
-        const opacity = sectionProgress;
+function animateSections() {
+  const windowHeight = window.innerHeight;
 
-        section.style.transform = `translateY(${translateY}px)`;
-        section.style.opacity = opacity;
-      });
-      
-      ticking = false;
-    }
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+
+    // How much of the section is visible in viewport
+    const progress = Math.min(
+      1,
+      Math.max(0, 1 - rect.top / windowHeight)
+    );
+
+    // Translate Y goes from 100px -> 0px
+    const translateY = 100 * (1 - progress);
+    const opacity = progress;
+
+    section.style.transform = `translateY(${translateY}px)`;
+    section.style.opacity = opacity;
+  });
+
+  ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(animateSections);
+    ticking = true;
+  }
+});
+
+// Run once on load
+animateSections();
+
 
     // This event listener updates the scroll position
     window.addEventListener('scroll', () => {

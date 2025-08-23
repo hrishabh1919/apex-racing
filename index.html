@@ -6,17 +6,17 @@
   <title>Apex Racing - Mastering The Apex</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --racing-red: #ff0033;
       --dark-bg: #0a0a0a;
-      --content-bg: #111;
+      --light-bg: #111;
       --text-light: #e0e0e0;
-      --text-medium: #b0b0b0;
+      --text-medium: #888;
     }
 
-    /* Reset */
+    /* Reset & Base */
     body, html {
       margin: 0;
       padding: 0;
@@ -24,7 +24,27 @@
       background-color: var(--dark-bg);
       color: var(--text-light);
       overflow-x: hidden;
-      /* scroll-behavior: smooth; is removed as Lenis will handle this */
+    }
+
+    /* Custom Cursor */
+    .cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--text-light);
+        border-radius: 50%;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+    }
+    .cursor.hover {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(255, 0, 51, 0.3);
+        border-color: var(--racing-red);
     }
 
     /* Header */
@@ -33,341 +53,404 @@
       top: 0;
       left: 0;
       width: 100%;
+      padding: 20px 5%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       z-index: 10;
       background: rgba(10, 10, 10, 0.7);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding: 15px 5%;
-      display: flex;
-      justify-content: center;
-      /* PREMIUM ANIMATION: Smooth transition for hiding/showing */
-      transition: top 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-      border-bottom: 1px solid rgba(255, 0, 51, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transform: translateY(-100%);
+      animation: slideDown 1s ease-out 3.5s forwards;
     }
-    /* PREMIUM ANIMATION: Class to hide header on scroll down */
-    .main-header--hidden {
-        top: -100px;
+    @keyframes slideDown {
+        to { transform: translateY(0); }
+    }
+    .header-logo {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: var(--text-light);
+        text-decoration: none;
     }
     .main-header nav a {
       color: var(--text-light);
       text-decoration: none;
-      margin: 0 20px;
+      margin-left: 40px;
       font-weight: 400;
       transition: color 0.3s ease, text-shadow 0.3s ease;
-      position: relative;
-      padding-bottom: 5px;
     }
-    .main-header nav a::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: var(--racing-red);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.3s ease-out;
+    .main-header nav a:hover,
+    .main-header nav a.active { /* Active state styling */
+      color: var(--racing-red);
+      text-shadow: 0 0 7px var(--racing-red);
     }
-    .main-header nav a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px var(--racing-red);
-    }
-    .main-header nav a:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
-    }
-
-    /* Splash Screen */
+    
+    /* --- MODIFICATION: Splash Screen --- */
     .splash-screen {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: var(--dark-bg);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 20;
       transition: opacity 1s ease-out, visibility 1s ease-out;
-      text-align: center;
     }
     .splash-screen.hidden { 
       opacity: 0; 
       visibility: hidden;
       pointer-events: none; 
     }
-    .logo-container { animation: engine-pulse 2s infinite ease-in-out; }
-    .logo-container img { max-width: 350px; height: auto; }
-    
-    .tagline {
-        margin-top: 25px;
-        font-size: 1.5rem;
+    .splash-logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .splash-logo-container img {
+        max-width: 300px;
+        /* Applying the new breathe animation */
+        animation: breathe 1.5s ease-in-out 2;
+    }
+
+    /* --- NEW: Breathe Animation --- */
+    @keyframes breathe {
+        0% {
+            transform: scale(0.95);
+            opacity: 0.7;
+        }
+        50% {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(0.95);
+            opacity: 0.7;
+        }
+    }
+
+    /* Main Container */
+    .container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 5%;
+        background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    }
+    .hero-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2.5rem, 10vw, 8rem);
+        text-transform: uppercase;
+        line-height: 1.1;
+        margin: 0;
+        color: #fff;
+        text-shadow: 0 0 14px rgba(255, 0, 51, 0.5);
+    }
+    .hero-tagline {
+        font-size: clamp(1rem, 2vw, 1.5rem);
         color: var(--text-medium);
-        letter-spacing: 2px;
-        font-weight: 300;
-        animation: text-flicker 3s infinite;
+        margin-top: 20px;
+        letter-spacing: 3px;
     }
 
-    @keyframes engine-pulse {
-      0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--racing-red)); }
-      50% { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--racing-red)); }
-      100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--racing-red)); }
+    /* Horizontal Scroll Section */
+    .horizontal-scroll-container {
+        position: relative;
+        height: 100vh;
     }
-    @keyframes text-flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+    .horizontal-scroll-wrapper {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+    .horizontal-content {
+        display: flex;
+        height: 100%;
+        width: 300vw; /* 100vw per section */
+        will-change: transform;
+    }
+    .content-panel {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10%;
+        box-sizing: border-box;
+    }
+    .panel-content {
+        max-width: 900px;
+    }
+    .panel-number {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2rem;
+        color: var(--racing-red);
+        margin-bottom: 20px;
+    }
+    .panel-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        text-transform: uppercase;
+        margin: 0 0 30px 0;
+    }
+    .panel-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-medium);
+    }
+    .panel-text b {
+        color: var(--text-light);
+        font-weight: 400;
     }
 
-    /* Hero Background */
-    .hero-background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100vh;
-      background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Your+Award+Image'); 
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: 1;
-      opacity: 0; 
-      transform: scale(1);
-      transition: opacity 1.5s ease-in-out; /* Only transition opacity now */
-      will-change: transform, opacity;
-    }
-    
-    /* Scrolling Message */
-    .scroll-message-container {
-      position: fixed;
-      top: 50%; left: 0;
-      width: 100%;
-      transform: translateY(-50%);
-      z-index: 3;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .scroll-message {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 6vw;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.9);
-      white-space: nowrap;
-      text-transform: uppercase;
-      transform: translateX(100%) skewX(-15deg);
-      will-change: transform;
-      text-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+    /* Footer/End Section */
+    .end-section {
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3rem;
+        text-transform: uppercase;
+        color: var(--text-medium);
     }
 
-    /* Main Content */
-    .main-content {
-      position: relative;
-      z-index: 2;
-      background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-      background-color: #050505;
-    }
-    .content-section {
-      /* MODIFICATION: Made more compact */
-      padding: 50px 7%;
-      max-width: 900px;
-      margin: 70px auto;
-      background-color: rgba(17, 17, 17, 0.8);
-      backdrop-filter: blur(5px);
-      border-radius: 8px;
-      border: 1px solid rgba(255, 0, 51, 0.3);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255, 0, 51, 0.1);
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
-    }
-    /* MODIFICATION: Corrected hover animation to lift up and be more responsive */
-    .content-section:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 30px var(--racing-red);
-    }
-    .content-section.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    /* PREMIUM ANIMATION: Staggered animation for content */
-    .content-section h2, .content-section p, .content-section b {
+    /* Scroll to Top Button */
+    .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--racing-red);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 5;
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        border: 2px solid var(--racing-red);
     }
-    .content-section.visible h2, .content-section.visible p, .content-section.visible b {
+    .scroll-to-top.visible {
         opacity: 1;
         transform: translateY(0);
+        pointer-events: auto;
     }
-    /* Stagger delay */
-    .content-section.visible p { transition-delay: 0.5s; }
-    .content-section.visible b { transition-delay: 0.4s; }
-
-    .content-section h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.8rem;
-      margin-bottom: 30px;
-      padding-left: 0;
-      border-left: none;
-      color: #fff;
-      text-transform: uppercase;
-      display: inline-block;
-      border-bottom: 3px solid var(--racing-red);
-      padding-bottom: 10px;
-      text-shadow: 0 0 10px var(--racing-red);
-      /* MODIFICATION: Added transition for hover effect */
-      transition: color 0.4s ease, text-shadow 0.4s ease;
+    .scroll-to-top:hover {
+        background-color: transparent;
     }
-    /* MODIFICATION: Added elegant heading glow on hover */
-    .content-section:hover h2 {
-        color: var(--racing-red);
-        text-shadow: 0 0 20px var(--racing-red);
+    .scroll-to-top svg {
+        width: 24px;
+        height: 24px;
+        stroke: #fff;
+        transition: transform 0.3s ease;
     }
-    .content-section p, .content-section b {
-      font-size: 1.1rem;
-      /* MODIFICATION: Reduced line-height for compactness */
-      line-height: 1.7;
-      color: var(--text-medium);
-    }
-    .content-section b {
-        color: var(--text-light);
-        display: block;
-        margin-bottom: 1em;
-        font-weight: 700;
+    .scroll-to-top:hover svg {
+        transform: translateY(-3px);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .logo-container, .hero-background, .main-header nav a, .scroll-message, .content-section {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
   </style>
 </head>
 <body>
 
+  <div class="cursor"></div>
+
   <header class="main-header">
+    <a href="#" class="header-logo">Apex Racing</a>
     <nav>
-      <a href="#stem-racing">STEM Racing</a>
-      <a href="#about-us">About Us</a>
-      <a href="#apex-green">Apex Green</a>
+      <a href="#stem-racing" class="nav-link">STEM Racing</a>
+      <a href="#about-us" class="nav-link">About Us</a>
+      <a href="#apex-green" class="nav-link">Apex Green</a>
     </nav>
   </header>
 
+  <!-- --- MODIFICATION: Splash Screen HTML --- -->
   <div class="splash-screen">
-    <div class="logo-container">
-      <img src="images/logo.png" alt="Apex Racing Logo" onerror="this.src='https://placehold.co/350x150/0a0a0a/FFFFFF?text=Logo+Not+Found';">
+    <div class="splash-logo-container">
+        <img src="images/logo.png" alt="Apex Racing Logo">
     </div>
-    <h1 class="tagline">Mastering The Apex, Owning The Finish</h1>
   </div>
 
-  <div class="hero-background"></div>
+  <div class="container">
+    <section class="hero-section" id="home">
+        <h1 class="hero-title">Apex Racing</h1>
+        <p class="hero-tagline">Mastering The Apex, Owning The Finish</p>
+    </section>
 
-  <div class="scroll-message-container">
-    <div class="scroll-message">TEAM APEX RACING</div>
+    <div class="horizontal-scroll-container">
+        <div class="horizontal-scroll-wrapper">
+            <div class="horizontal-content">
+                <section class="content-panel" id="stem-racing">
+                    <div class="panel-content">
+                        <div class="panel-number">01</div>
+                        <h2 class="panel-title">Stem Racing</h2>
+                        <p class="panel-text">STEM racing is where innovation meets speed. It’s more than just building miniature race cars—it’s about pushing the limits of Science, Technology, Engineering, and Mathematics to solve real-world challenges. Through competitions like Stem Racing, we transform ideas into high-performance machines, mastering everything from aerodynamics to branding.</p>
+                    </div>
+                </section>
+                <section class="content-panel" id="about-us">
+                    <div class="panel-content">
+                        <div class="panel-number">02</div>
+                        <h2 class="panel-title">About Us</h2>
+                        <p class="panel-text">At Apex Racing, we blend passion, innovation, and precision to create high-performance miniature race cars. Guided by our motto “Mastering the Apex, Owning the Finish,” we turn ideas into engineering reality—combining aerodynamics, design, and teamwork to compete at the highest level and represent India on the world stage.</p>
+                    </div>
+                </section>
+                <section class="content-panel" id="apex-green">
+                    <div class="panel-content">
+                        <div class="panel-number">03</div>
+                        <h2 class="panel-title">Apex Green</h2>
+                        <p class="panel-text"><b>“Creating a Sustainable Future: Planting Trees for Today and Tomorrow”</b><br>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <section class="end-section">
+        The Finish Line
+    </section>
   </div>
 
-  <div class="main-content">
-    <div style="height:100vh;"></div> <!-- Spacer -->
-    <section class="content-section" id="stem-racing">
-      <h2>Stem Racing</h2>
-      <p>STEM racing is where innovation meets speed. It’s more than just building miniature race cars—it’s about pushing the limits of Science, Technology, Engineering, and Mathematics to solve real-world challenges. Through competitions like Stem Racing, we transform ideas into high-performance machines, mastering everything from aerodynamics to branding. Along the way, we gain industry-level engineering skills, business experience, and the teamwork needed to succeed—skills that drive us both on the track and in our future careers.</p>
-    </section>
-    <section class="content-section" id="about-us">
-      <h2>About Us</h2>
-      <p>At Apex Racing, we blend passion, innovation, and precision to create high-performance miniature race cars for the STEM Racing challenge. Guided by our motto “Mastering the Apex, Owning the Finish,” we turn ideas into engineering reality—combining aerodynamics, design, and teamwork to compete at the highest level. Since our debut, we’ve proudly represented India on the world stage, with milestones including podium finishes, fastest car titles, and national championships. But for us, every award is just a checkpoint—the real race is mastering our craft, inspiring others in STEM, and pushing the boundaries of what’s possible.</p>
-    </section>
-    <section class="content-section" id="apex-green">
-      <h2>Apex Green</h2>
-      <b>“Creating a Sustainable Future: Planting Trees for Today and Tomorrow”</b>
-      <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.</p>
-    </section>
-    <div style="height:50vh;"></div>
-  </div>
+  <a class="scroll-to-top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </a>
 
-  <!-- PREMIUM ANIMATION: Added Lenis for smooth scrolling -->
+  <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
   <script>
+    // --- Splash Screen ---
     const splashScreen = document.querySelector('.splash-screen');
-    const heroBackground = document.querySelector('.hero-background');
-    const scrollMessage = document.querySelector('.scroll-message');
-    const header = document.querySelector('.main-header');
+    // The timeout matches the 3s total duration of the new animation (1.5s * 2 iterations)
+    setTimeout(() => {
+      splashScreen.classList.add('hidden');
+    }, 3000);
 
-    // --- PREMIUM ANIMATION: Lenis Smooth Scroll Initialization ---
+    // --- Lenis Smooth Scroll ---
     const lenis = new Lenis();
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-    // --- End of Lenis Setup ---
 
-    setTimeout(() => {
-      splashScreen.classList.add('hidden');
-      heroBackground.style.opacity = '1';
-    }, 3000);
+    // --- GSAP Horizontal Scroll ---
+    gsap.registerPlugin(ScrollTrigger);
+    const horizontalContent = document.querySelector('.horizontal-content');
 
-    // --- PREMIUM ANIMATION: Hide header on scroll down ---
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-        if (currentScroll > lastScroll && currentScroll > header.clientHeight) {
-            // Scrolled down
-            header.classList.add('main-header--hidden');
-        } else {
-            // Scrolled up
-            header.classList.remove('main-header--hidden');
+    const horizontalTween = gsap.to(horizontalContent, {
+        x: () => - (horizontalContent.scrollWidth - document.documentElement.clientWidth) + "px",
+        ease: "none",
+        scrollTrigger: {
+            trigger: ".horizontal-scroll-container",
+            start: "top top",
+            end: () => "+=" + (horizontalContent.scrollWidth - document.documentElement.clientWidth),
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
         }
-        lastScroll = currentScroll;
     });
-    // --- End of Header Animation ---
 
+    // --- Custom Cursor ---
+    const cursor = document.querySelector('.cursor');
+    const interactiveElements = document.querySelectorAll('a');
 
-    // --- PREMIUM ANIMATION: Parallax and refined scroll effects ---
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-
-      if (splashScreen.classList.contains('hidden')) {
-          const scrollProgress = Math.min(1, scrollPosition / windowHeight);
-          const scale = 1 + (scrollProgress * 0.5); // Reduced scale for subtlety
-          const opacity = 1 - scrollProgress;
-          const parallax = scrollPosition * 0.4; // Parallax effect
-
-          // Apply scale, opacity, and parallax transform
-          heroBackground.style.transform = `translateY(${parallax}px) scale(${scale})`;
-          heroBackground.style.opacity = opacity;
-      }
-      
-      const messageStart = windowHeight * 0.2;
-      const messageEnd = windowHeight * 0.8;
-      
-      if (scrollPosition > messageStart && scrollPosition < messageEnd) {
-          const messageProgress = (scrollPosition - messageStart) / (messageEnd - messageStart);
-          const translateX = 100 - (messageProgress * 200);
-          scrollMessage.style.transform = `translateX(${translateX}%) skewX(-15deg)`;
-      } else if (scrollPosition <= messageStart) {
-          scrollMessage.style.transform = 'translateX(100%) skewX(-15deg)';
-      } else {
-          scrollMessage.style.transform = 'translateX(-100%) skewX(-15deg)';
-      }
+    window.addEventListener('mousemove', e => {
+        gsap.to(cursor, {
+            duration: 0.3,
+            x: e.clientX,
+            y: e.clientY,
+            ease: 'power3.out'
+        });
     });
-    // --- End of Parallax ---
 
-    // --- PREMIUM ANIMATION: Intersection Observer for staggered content fade-in ---
-    const sections = document.querySelectorAll('.content-section');
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // --- Navigation Links ---
+    document.querySelectorAll('.nav-link').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                lenis.scrollTo(targetElement, {
+                    offset: -window.innerHeight / 2
+                });
             }
         });
-    }, {
-        threshold: 0.2 // Trigger when 20% of the element is visible
     });
+    
+    // --- Active Nav Link on Scroll ---
+    const navLinks = gsap.utils.toArray('.nav-link');
+    const sections = gsap.utils.toArray('.content-panel');
 
     sections.forEach(section => {
-        observer.observe(section);
+        ScrollTrigger.create({
+            trigger: section,
+            start: "left center",
+            end: "right center",
+            horizontal: true,
+            containerAnimation: horizontalTween,
+            onToggle: self => self.isActive && setActive(section)
+        });
     });
+
+    function setActive(activeSection) {
+        navLinks.forEach(link => {
+            if (link.hash === `#${activeSection.id}`) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+
+    // --- Scroll to Top Logic ---
+    const scrollToTopBtn = document.querySelector('.scroll-to-top');
+    const logoLink = document.querySelector('.header-logo');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
+    });
+
+    const scrollToTop = () => {
+        lenis.scrollTo(0, { duration: 2 });
+    };
+
+    scrollToTopBtn.addEventListener('click', scrollToTop);
+    logoLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToTop();
+    });
+
   </script>
 </body>
 </html>

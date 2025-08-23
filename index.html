@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apex Racing - Mastering The Apex</title>
   <style>
+    /* NOTE: This code assumes you have 'logo.png' and 'car.png'
+     * in the same directory as this HTML file.
+     */
+
     /* Reset */
     body, html {
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: #0a0a0a;
-      color: #e0e0e0;
+      color: #eaeaea;
       overflow-x: hidden;
     }
 
@@ -34,11 +38,11 @@
     .logo-container img { max-width: 350px; height: auto; }
     
     .tagline {
-        margin-top: 25px;
-        font-size: 1.5rem;
-        color: #cccccc;
-        letter-spacing: 2px;
-        font-weight: 300;
+      margin-top: 25px;
+      font-size: 1.5rem;
+      color: #cccccc;
+      letter-spacing: 2px;
+      font-weight: 300;
     }
 
     @keyframes pulse {
@@ -52,18 +56,16 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100vh;
-      /* --- KEY FIX HERE --- */
-      /* Set the background image directly. Assumes 'car.png' is in the same folder as index.html */
       background-image: url('car.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       
-      z-index: 1;
-      opacity: 1; /* Start completely invisible */
-      transform: scale(1); /* Start at normal size */
-      /* Smooth transitions for opacity and transform */
-      transition: opacity 1s ease-in-out, transform 0.5s ease-out;
+      /* Bring the car forward and give it an initial larger scale */
+      z-index: 2;
+      opacity: 0;
+      transform: scale(1.1); 
+      transition: opacity 1s ease-in-out;
     }
     
     /* Right-to-Left Scrolling Overlay Message */
@@ -90,24 +92,28 @@
     /* Main Content */
     .main-content {
       position: relative;
-      z-index: 2;
-      background: #0a0a0a;
+      z-index: 3;
     }
     .content-section {
       padding: 100px 10%;
       max-width: 900px;
       margin: 0 auto;
+      
+      /* New initial state for the continuous "slip-up" animation */
+      opacity: 0;
+      transform: translateY(100px);
     }
+
     .content-section h2 {
       font-size: 2.5rem;
-      margin-bottom: 20px;
-      border-left: 4px solid #00ff99;
+      margin-bottom: 10px;
+      border-left: 6px solid #a81414;
       padding-left: 15px;
     }
     .content-section p {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       line-height: 1.7;
-      color: #b0b0b0;
+      color: #eeeeee;
     }
   </style>
 </head>
@@ -126,8 +132,7 @@
   </div>
 
   <div class="main-content">
-    <div style="height:100vh;"></div> <!-- Spacer -->
-    <section class="content-section" id="stem-racing">
+    <div style="height:100vh;"></div> <section class="content-section" id="stem-racing">
       <h2>Stem Racing</h2>
       <p>STEM racing is where innovation meets speed. It’s more than just building miniature race cars—it’s about pushing the limits of Science, Technology, Engineering, and Mathematics to solve real-world challenges. Through competitions like Stem Racing, we transform ideas into high-performance machines, mastering everything from aerodynamics to branding. Along the way, we gain industry-level engineering skills, business experience, and the teamwork needed to succeed—skills that drive us both on the track and in our future careers.</p>
     </section>
@@ -138,8 +143,7 @@
     <section class="content-section" id="apex-green">
       <h2>Apex Green</h2>
       <b>“Creating a Sustainable Future: Planting Trees for Today and Tomorrow”</b>
-      <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.
-</p>
+      <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.</p>
     </section>
     <div style="height:50vh;"></div>
   </div>
@@ -148,45 +152,76 @@
     const splash = document.querySelector('.splash-screen');
     const car = document.querySelector('.car-background');
     const scrollMessage = document.querySelector('.scroll-message');
+    const sections = document.querySelectorAll('.content-section');
 
-    // 1. Hide splash, show car after a delay
+    // Hide splash screen after 3 seconds and reveal the car
     setTimeout(() => {
       splash.classList.add('hidden');
-      // Set opacity to 1 to fade the car in
       car.style.opacity = '1';
     }, 3000);
 
-    // 2. Handle all scroll-based animations
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
+    // --- Modern Scroll-Based Animations using requestAnimationFrame ---
+    let ticking = false;
+    let lastScrollY = 0;
+
+    function animateOnScroll() {
+      const scrollPosition = lastScrollY;
       const windowHeight = window.innerHeight;
 
-      // Only animate if the splash screen is hidden
       if (splash.classList.contains('hidden')) {
-          // Animation: Car scales up and fades into the background
-          const scrollProgress = Math.min(1, scrollPosition / windowHeight);
-          const scale = 1 + (scrollProgress * 1.5);
-          // Opacity goes from 1 (fully visible) to 0 (invisible)
-          const opacity = 1 - scrollProgress;
+        // Animation: Car recedes and fades away as content scrolls over it
+        const scrollProgress = Math.min(1, scrollPosition / windowHeight);
+        const scale = 1.1 - (scrollProgress * 0.15); // Shrinks from 1.1 to 0.6
+        const opacity = 1 - (scrollProgress * 0.5); // Fades
 
-          car.style.transform = `scale(${scale})`;
-          car.style.opacity = opacity;
+        car.style.transform = `scale(${scale})`;
+        car.style.opacity = Math.max(0, opacity); // Ensure opacity doesn't go below 0
       }
       
-      // Animation: Text scrolls from right to left
+      // Animation: "TEAM APEX RACING" text scrolls from right to left
       const messageStart = windowHeight * 0.2;
       const messageEnd = windowHeight * 0.8;
       
       if (scrollPosition > messageStart && scrollPosition < messageEnd) {
-          const messageProgress = (scrollPosition - messageStart) / (messageEnd - messageStart);
-          const translateX = 100 - (messageProgress * 200);
-          scrollMessage.style.transform = `translateX(${translateX}%)`;
+        const messageProgress = (scrollPosition - messageStart) / (messageEnd - messageStart);
+        const translateX = 100 - (messageProgress * 200);
+        scrollMessage.style.transform = `translateX(${translateX}%)`;
       } else if (scrollPosition <= messageStart) {
-          scrollMessage.style.transform = 'translateX(100%)';
+        scrollMessage.style.transform = 'translateX(100%)';
       } else {
-          scrollMessage.style.transform = 'translateX(-100%)';
+        scrollMessage.style.transform = 'translateX(-100%)';
+      }
+
+      // NEW Animation: Content sections slip up as they enter the viewport
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top;
+        const sectionHeight = rect.height;
+
+        // Calculate a progress value for each section based on its position in the viewport
+        let sectionProgress = Math.max(0, Math.min(1, (windowHeight - sectionTop) / (windowHeight + sectionHeight)));
+        
+        const translateY = 100 * (1 - sectionProgress);
+        const opacity = sectionProgress;
+
+        section.style.transform = `translateY(${translateY}px)`;
+        section.style.opacity = opacity;
+      });
+      
+      ticking = false;
+    }
+
+    // This event listener updates the scroll position
+    window.addEventListener('scroll', () => {
+      lastScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(animateOnScroll);
+        ticking = true;
       }
     });
+
+    // Initial call to set the correct state on load
+    animateOnScroll();
   </script>
 </body>
 </html>

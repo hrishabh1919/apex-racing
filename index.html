@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apex Racing - Mastering The Apex</title>
   <style>
-    /* NOTE: This code assumes you have 'logo.png' and 'car.png'
-     * in the same directory as this HTML file.
-     */
-
-    /* Reset */
+    /* =======================
+       GLOBAL RESET & STYLING
+    ======================== */
     body, html {
       margin: 0;
       padding: 0;
@@ -19,7 +17,9 @@
       overflow-x: hidden;
     }
 
-    /* Splash Screen */
+    /* =======================
+       SPLASH SCREEN STYLES
+    ======================== */
     .splash-screen {
       position: fixed;
       top: 0; left: 0;
@@ -33,10 +33,21 @@
       transition: opacity 1s ease-out;
       text-align: center;
     }
-    .splash-screen.hidden { opacity: 0; pointer-events: none; }
-    .logo-container { animation: pulse 1.5s infinite ease-in-out; }
-    .logo-container img { max-width: 350px; height: auto; }
-    
+    .splash-screen.hidden { 
+      opacity: 0; 
+      pointer-events: none; 
+    }
+
+    /* Splash logo animation */
+    .logo-container { 
+      animation: pulse 1.5s infinite ease-in-out; 
+    }
+    .logo-container img { 
+      max-width: 350px; 
+      height: auto; 
+    }
+
+    /* Tagline text */
     .tagline {
       margin-top: 25px;
       font-size: 1.5rem;
@@ -45,30 +56,33 @@
       font-weight: 300;
     }
 
+    /* Simple pulse animation for splash logo */
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
 
-    /* Car Background with Scroll Animations */
+    /* =======================
+       CAR BACKGROUND SECTION
+    ======================== */
     .car-background {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100vh;
-      background-image: url('car.png');
+      background-image: url('car.png'); /* Car graphic */
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      
-      /* Bring the car forward and give it an initial larger scale */
       z-index: 2;
-      opacity: 0;
-      transform: scale(1.1); 
+      opacity: 0;             /* Hidden at first (until splash ends) */
+      transform: scale(1.1);  /* Slight zoom for effect */
       transition: opacity 1s ease-in-out;
     }
-    
-    /* Right-to-Left Scrolling Overlay Message */
+
+    /* =======================
+       SCROLLING TEXT MESSAGE
+    ======================== */
     .scroll-message-container {
       position: fixed;
       top: 50%;
@@ -86,30 +100,33 @@
       color: white;
       white-space: nowrap;
       text-transform: uppercase;
-      transform: translateX(100%);
+      transform: translateX(100%); /* Starts off-screen */
     }
 
-    /* Main Content */
+    /* =======================
+       MAIN CONTENT SECTIONS
+    ======================== */
     .main-content {
       position: relative;
       z-index: 3;
     }
+
     .content-section {
       padding: 100px 10%;
       max-width: 900px;
       margin: 0 auto;
-      
-      /* New initial state for the continuous "slip-up" animation */
-      opacity: 0;
-      transform: translateY(100px);
+      opacity: 0;                    /* Hidden until scrolled into view */
+      transform: translateY(100px);  /* Start lower (slide up animation) */
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
     .content-section h2 {
       font-size: 2.5rem;
       margin-bottom: 10px;
-      border-left: 6px solid #a81414;
+      border-left: 6px solid #a81414; /* Red accent line */
       padding-left: 15px;
     }
+
     .content-section p {
       font-size: 1.3rem;
       line-height: 1.7;
@@ -118,6 +135,9 @@
   </style>
 </head>
 <body>
+  <!-- =======================
+       SPLASH SCREEN
+  ======================== -->
   <div class="splash-screen">
     <div class="logo-container">
       <img src="logo.png" alt="Apex Racing Logo">
@@ -125,63 +145,72 @@
     <h1 class="tagline">Mastering The Apex, Owning The Finish</h1>
   </div>
 
+  <!-- Background Car Image -->
   <div class="car-background"></div>
 
+  <!-- Scrolling Message -->
   <div class="scroll-message-container">
     <div class="scroll-message">TEAM APEX RACING</div>
   </div>
 
+  <!-- =======================
+       MAIN CONTENT
+  ======================== -->
   <div class="main-content">
-    <div style="height:100vh;"></div> <section class="content-section" id="stem-racing">
+    <div style="height:100vh;"></div> <!-- Spacer before first section -->
+
+    <section class="content-section" id="stem-racing">
       <h2>Stem Racing</h2>
       <p>STEM racing is where innovation meets speed. It’s more than just building miniature race cars—it’s about pushing the limits of Science, Technology, Engineering, and Mathematics to solve real-world challenges. Through competitions like Stem Racing, we transform ideas into high-performance machines, mastering everything from aerodynamics to branding. Along the way, we gain industry-level engineering skills, business experience, and the teamwork needed to succeed—skills that drive us both on the track and in our future careers.</p>
     </section>
+
     <section class="content-section" id="about-us">
       <h2>About Us</h2>
       <p>At Apex Racing, we blend passion, innovation, and precision to create high-performance miniature race cars for the STEM Racing challenge. Guided by our motto “Mastering the Apex, Owning the Finish,” we turn ideas into engineering reality—combining aerodynamics, design, and teamwork to compete at the highest level. Since our debut, we’ve proudly represented India on the world stage, with milestones including podium finishes, fastest car titles, and national championships. But for us, every award is just a checkpoint—the real race is mastering our craft, inspiring others in STEM, and pushing the boundaries of what’s possible.</p>
     </section>
+
     <section class="content-section" id="apex-green">
       <h2>Apex Green</h2>
       <b>“Creating a Sustainable Future: Planting Trees for Today and Tomorrow”</b>
       <p>Apex Green is our long-term sustainability initiative, dedicated to taking our impact beyond the racetrack. From tree plantation drives to eco-education workshops, we work to inspire environmental responsibility in our community. By introducing sustainable products like seed-paper notebooks and recycled merchandise, we blend innovation with eco-conscious design. Through partnerships with schools, NGOs, and local groups, Apex Green aims to empower young people to take action—proving that speed and sustainability can race side by side.</p>
     </section>
-    <div style="height:50vh;"></div>
+
+    <div style="height:50vh;"></div> <!-- Spacer at end -->
   </div>
 
+  <!-- =======================
+       JAVASCRIPT ANIMATIONS
+  ======================== -->
   <script>
+    // 1. Grab references to DOM elements
     const splash = document.querySelector('.splash-screen');
     const car = document.querySelector('.car-background');
     const scrollMessage = document.querySelector('.scroll-message');
     const sections = document.querySelectorAll('.content-section');
 
-    // Hide splash screen after 3 seconds and reveal the car
+    // 2. Splash screen fades out after 3s, car fades in
     setTimeout(() => {
       splash.classList.add('hidden');
       car.style.opacity = '1';
     }, 3000);
 
-    // --- Modern Scroll-Based Animations using requestAnimationFrame ---
-    let ticking = false;
-    let lastScrollY = 0;
-
+    // 3. Handle scroll-based animations
     function animateOnScroll() {
-      const scrollPosition = lastScrollY;
+      const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
 
+      // (a) Car zooms out & fades as user scrolls
       if (splash.classList.contains('hidden')) {
-        // Animation: Car recedes and fades away as content scrolls over it
         const scrollProgress = Math.min(1, scrollPosition / windowHeight);
-        const scale = 1.1 - (scrollProgress * 0.15); // Shrinks from 1.1 to 0.6
-        const opacity = 1 - (scrollProgress * 0.5); // Fades
-
+        const scale = 1.1 - (scrollProgress * 0.15);
+        const carOpacity = 1 - (scrollProgress * 0.5);
         car.style.transform = `scale(${scale})`;
-        car.style.opacity = Math.max(0, opacity); // Ensure opacity doesn't go below 0
+        car.style.opacity = Math.max(0, carOpacity);
       }
-      
-      // Animation: "TEAM APEX RACING" text scrolls from right to left
+
+      // (b) Scrolling message moves horizontally across screen
       const messageStart = windowHeight * 0.2;
       const messageEnd = windowHeight * 0.8;
-      
       if (scrollPosition > messageStart && scrollPosition < messageEnd) {
         const messageProgress = (scrollPosition - messageStart) / (messageEnd - messageStart);
         const translateX = 100 - (messageProgress * 200);
@@ -192,53 +221,29 @@
         scrollMessage.style.transform = 'translateX(-100%)';
       }
 
-      const sections = document.querySelectorAll('.section');
-let ticking = false;
+      // (c) Content sections fade + slide in when visible
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < windowHeight * 0.8) {
+          section.style.opacity = '1';
+          section.style.transform = 'translateY(0)';
+        }
+      });
+    }
 
-function animateSections() {
-  const windowHeight = window.innerHeight;
-
-  sections.forEach(section => {
-    const rect = section.getBoundingClientRect();
-
-    // How much of the section is visible in viewport
-    const progress = Math.min(
-      1,
-      Math.max(0, 1 - rect.top / windowHeight)
-    );
-
-    // Translate Y goes from 100px -> 0px
-    const translateY = 100 * (1 - progress);
-    const opacity = progress;
-
-    section.style.transform = `translateY(${translateY}px)`;
-    section.style.opacity = opacity;
-  });
-
-  ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    window.requestAnimationFrame(animateSections);
-    ticking = true;
-  }
-});
-
-// Run once on load
-animateSections();
-
-
-    // This event listener updates the scroll position
+    // 4. Optimize scroll event using requestAnimationFrame
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      lastScrollY = window.scrollY;
       if (!ticking) {
-        window.requestAnimationFrame(animateOnScroll);
+        window.requestAnimationFrame(() => {
+          animateOnScroll();
+          ticking = false;
+        });
         ticking = true;
       }
     });
 
-    // Initial call to set the correct state on load
+    // 5. Run once on page load to set initial state
     animateOnScroll();
   </script>
 </body>

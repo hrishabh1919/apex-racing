@@ -38,12 +38,25 @@
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background-color: var(--dark-bg);
-            background-image: url('https://www.transparenttextures.com/patterns/subtle-carbon.png');
-            background-repeat: repeat;
-            background-size: auto;
-            color: var(--text-light);
+            color: #ffffff;
             overflow-x: hidden;
-        }
+            position: relative;
+            z-index: 0;
+    }
+
+body::before {
+    content: '';
+    position: fixed; /* or absolute depending on layout */
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background-image: url('https://www.transparenttextures.com/patterns/subtle-carbon.png');
+    background-repeat: repeat;
+    background-size: auto;
+    opacity: 0.7; 
+    z-index: 0;
+}
         /* Hide system cursor for custom pointer, but auto-enable for accessibility */
         * {
             cursor: none;
@@ -211,6 +224,7 @@
             align-items: center;
             text-align: center;
             padding: 0 5%;
+            z-index: 0;
             overflow: hidden;
         }
         .hero-section::before {
@@ -220,10 +234,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('images/car.png');
+            /* background-image: url('images/car.png'); */
             background-size: cover;
             background-position: center;
-            z-index: -1;
+            z-index: 0;
             --bg-scale: 1.25;
             transform: scale(var(--bg-scale));
             transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
@@ -234,6 +248,7 @@
             text-transform: uppercase;
             line-height: 1.1;
             margin: 0;
+            z-index: 0;
             color: #fff;
             text-shadow: 0 0 14px rgba(255, 0, 51, 0.5);
         }
@@ -245,6 +260,7 @@
             font-size: clamp(1rem, 2vw, 1.5rem);
             color: var(--text-medium);
             margin-top: 20px;
+            z-index: 0;
             letter-spacing: 3px;
         }
         /* Horizontal Scroll Panels */
@@ -383,6 +399,294 @@
             outline: 2px solid var(--racing-red);
             outline-offset: 2px;
         }
+
+        .contact-section {
+  background-color: #313030;
+  color: #eee;
+  padding: 60px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contact-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-heading {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  color: #ac1230;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.contact-intro {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #bbb;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.contact-item {
+  flex: 1 1 250px;
+}
+
+.contact-item h3 {
+  color: #ac1230;
+  margin-bottom: 10px;
+}
+
+.contact-item a {
+  color: #eee;
+  text-decoration: none;
+}
+
+.contact-item a:hover,
+.contact-item a:focus {
+  text-decoration: underline;
+  outline: none;
+}
+
+.contact-form {
+  background-color: #222;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 0, 51, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.contact-form button {
+  background-color: #ac1230;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: inherit;
+}
+
+.contact-form button:hover,
+.contact-form button:focus {
+  background-color: #ac1230;
+  outline: none;
+}
+
+.developer-contact {
+  background-color: #2a2a2a;
+  color: #eee;
+  padding: 30px 20px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+.developer-inner {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.developer-logo img {
+  max-height: 80px;
+  width: auto;
+  display: block;
+}
+
+.developer-info h3 {
+  color: #006dcc;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.developer-info p {
+  margin: 6px 0;
+  font-size: 1.1rem;
+}
+
+.developer-info a {
+  color: #006dcc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.developer-info a:hover,
+.developer-info a:focus {
+  color: #006dcc;
+  outline: #78bcf8;
+  text-decoration: underline;
+}
+
+/* Grid Container */
+.sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 2rem;
+    padding: 60px 20px;
+    margin: 80px auto;
+    background: linear-gradient(145deg, rgba(15, 15, 15, 0.8), rgba(20, 20, 20, 0.7));
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Pseudo-element for background texture */
+.sponsor-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml,%3Csvg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%239C92AC" fill-opacity="0.12" fill-rule="evenodd"%3E%3Cpath d="M0 0h3v3H0V0zm3 3h3v3H3V3z"/%3E%3C/g%3E%3C/svg%3E');
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Individual Sponsor Logo Box */
+.sponsor-logo-box {
+    /* Base styles for visibility and layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 170px;
+    padding: 24px 18px;
+
+    /* Visual and interactive styles */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    /* Animation starting point (this is the key fix) */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Hover effects */
+.sponsor-logo-box:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--racing-red);
+    box-shadow: 0 8px 25px rgba(255, 0, 51, 0.4), 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px) scale(1.04);
+}
+
+/* Inner glow on hover */
+.sponsor-logo-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 0, 51, 0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1; 
+}
+
+.sponsor-logo-box:hover::after {
+    opacity: 1;
+}
+
+/* Image Container Styling */
+.sponsor-logo-box img {
+    max-width: 100px;
+    max-height: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    filter: brightness(0.95);
+    transition: filter 0.3s ease;
+    object-fit: contain;
+}
+
+.sponsor-logo-box:hover img {
+    filter: brightness(1.1);
+}
+
+/* Sponsor Name Styling */
+.sponsor-logo-box span {
+    font-family: 'Orbitron', 'Poppins', Arial, sans-serif;
+    font-size: 1.15rem;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .sponsor-grid {
+        padding: 40px 15px;
+        margin: 50px auto;
+        gap: 1.5rem;
+    }
+    .sponsor-logo-box {
+        min-height: 150px;
+        padding: 20px 15px;
+    }
+    .sponsor-logo-box img {
+        max-width: 90px;
+        max-height: 45px;
+        margin-bottom: 15px;
+    }
+    .sponsor-logo-box span {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-grid {
+        grid-template-columns: 1fr;
+        padding: 30px 10px;
+        margin: 30px auto;
+    }
+    .sponsor-logo-box {
+        min-height: 120px;
+        padding: 15px 10px;
+    }
+    .sponsor-logo-box img {
+        max-width: 80px;
+        max-height: 40px;
+        margin-bottom: 10px;
+    }
+    .sponsor-logo-box span {
+        font-size: 0.95rem;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -395,7 +699,7 @@
             <a href="#stem-racing" class="nav-link" tabindex="0">STEM Racing</a>
             <a href="#about-us" class="nav-link" tabindex="0">About Us</a>
             <a href="#apex-green" class="nav-link" tabindex="0">Apex Green</a>
-            <a href="contact" class="con-nav-link" tabindex="0">Contact</a>
+            <a href="#contact" class="con-nav-link" tabindex="0">Contact</a>
         </nav>
     </header>
     <div class="splash-screen" aria-hidden="true">
@@ -404,6 +708,7 @@
         </div>
     </div>
     <div class="container">
+        
         <section class="hero-section" id="home">
             <h1 class="hero-title">
               <span class="red-letter">A</span>PEX <span class="red-letter">R</span>ACING
@@ -437,13 +742,70 @@
                 </div>
             </div>
         </div>
-        <section class="end-section">The Finish Line</section>
+<div class="sponsor-grid">
+  <div class="sponsor-logo-box">
+    <img src="sponsor/abec357.png" alt="Abec357 Logo">
+    <span>Abec357</span>
+  </div>
+  <div class="sponsor-logo-box">
+    <img src="sponsor/airshaper.jpg" alt="Airshaper Logo">
+    <span>Airshaper</span>
+  </div>
+  <div class="sponsor-logo-box">
+    <img src="sponsor/blinkit.png" alt="Blinkit Logo">
+    <span>Blinkit</span>
+  </div>
+  <div class="sponsor-logo-box">
+    <img src="sponsor/hop transparent bg-01.png" alt="Hop Logo">
+    <span>Hop</span>
+  </div>
+  <div class="sponsor-logo-box">
+    <img src="sponsor/rapid-3d-removebg-preview.png" alt="Rapid 3D Logo">
+    <span>Rapid 3D</span>
+  </div>
+</div>
+
+    <div>
+    <section class="end-section">The Finish Line</section>
+<section id="contact" class="contact-section" aria-label="Contact Section">
+  <div class="contact-container">
+    <h2 class="contact-heading">Get in Touch</h2>
+    <p class="contact-intro">
+      Have questions or want to collaborate? Reach out to us through any of the following methods or give us a call!
+    </p>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <h3>Email</h3>
+        <p><a href="mailto:info.teamapexracing@gmail.com">info.teamapexracing@gmail.com</a></p>
+      </div>
+      <div class="contact-item">
+        <h3>Phone</h3>
+        <p><a href="tel:+7011275694">+91 7011275694</a></p>
+      </div>
+      <div class="contact-item">
+        <h3>Address</h3>
+        <p>123 Apex Racing Street,<br>Technology City, India</p>
+      </div>
     </div>
-    <section id="contact" class="contact-section" style="background-color: #333232;">
-    <h2>Contact Us</h2>
-      <!-- Your contact details or form here -->
-      <p>Email: info@yourdomain.com</p>
-      <p>Phone: +1-234-567-8900</p>
+
+  </div>
+</section>
+
+<section class="developer-contact">
+  <div class="developer-inner">
+    <div class="developer-logo" aria-label="Developer Company Logo">
+      <img src="images/dev-logo.png" alt="Developer Company Logo" />
+    </div>
+    <div class="developer-info">
+  <h3>Website Developed By</h3>
+  <p><strong>Email:</strong> <a href="mailto:codeware.space@gmail.com">codeware.space@gmail.com</a></p>
+  <p><strong>Phone:</strong> <a href="tel:+919410743689">+91-9410743689</a></p>
+  <p><strong>Phone:</strong> <a href="tel:+919919796939">+91-9919796939</a></p>
+</div>
+  </div>
+</section>
+
     </section>
     <a class="scroll-to-top" tabindex="0" aria-label="Scroll to top of the page">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -451,124 +813,212 @@
         </svg>
     </a>
     <!-- External Libraries -->
-    <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js" defer></script>
-    <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Splash Screen fade-out
-            const splashScreen = document.querySelector('.splash-screen');
+
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollToPlugin.min.js" defer></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // ====================================================================
+        // === Splash Screen Fade-Out =========================================
+        // ====================================================================
+        const splashScreen = document.querySelector('.splash-screen');
+        if (splashScreen) {
             setTimeout(() => {
                 splashScreen.classList.add('hidden');
             }, 2500);
+        }
 
-            // Custom Image Cursor logic (desktop only)
-            const cursor = document.querySelector('.cursor');
-            if (cursor) {
-                const interactiveElements = document.querySelectorAll('a, button, .scroll-to-top');
-                window.addEventListener('mousemove', e => {
-                    cursor.style.left = e.clientX + "px";
-                    cursor.style.top = e.clientY + "px";
-                });
-                interactiveElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-                });
-            }
+        // ====================================================================
+        // === Custom Image Cursor Logic (Desktop Only) =======================
+        // ====================================================================
+        const cursor = document.querySelector('.cursor');
+        if (cursor) {
+            const interactiveElements = document.querySelectorAll('a, button, .scroll-to-top, .sponsor-logo-box');
+            window.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + "px";
+                cursor.style.top = e.clientY + "px";
+            });
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        }
 
-            // Check for Lenis library
-            function enableLenisAndScrollToTop() {
-                if (typeof Lenis !== 'undefined') {
-                    const lenis = new Lenis();
-                    function raf(time) {
-                        lenis.raf(time);
-                        requestAnimationFrame(raf);
-                    }
+        // ====================================================================
+        // === Lenis Smooth Scroll & Scroll-to-Top Button Logic ===============
+        // ====================================================================
+        function enableLenisAndScrollToTop() {
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis();
+
+                function raf(time) {
+                    lenis.raf(time);
                     requestAnimationFrame(raf);
-                    // Scroll-to-top button logic
-                    const scrollToTopBtn = document.querySelector('.scroll-to-top');
-                    const logoLink = document.querySelector('.header-logo');
-                    lenis.on('scroll', (e) => {
-                        if (e.animatedScroll > window.innerHeight) {
-                            scrollToTopBtn.classList.add('visible');
-                        } else {
-                            scrollToTopBtn.classList.remove('visible');
-                        }
-                    });
-                    const scrollToTop = (e) => {
-                        if (e) e.preventDefault();
-                        lenis.scrollTo(0, { duration: 2 });
-                    };
-                    scrollToTopBtn.addEventListener('click', scrollToTop);
-                    scrollToTopBtn.addEventListener('keydown', e => {
-                        if (e.key === 'Enter' || e.key === ' ') scrollToTop(e);
-                    });
-                    logoLink.addEventListener('click', scrollToTop);
-                    logoLink.addEventListener('keydown', e => {
-                        if (e.key === 'Enter' || e.key === ' ') scrollToTop(e);
-                    });
                 }
-            }
+                requestAnimationFrame(raf);
 
-            // Check for GSAP and set up scroll effects
-            function enableGSAPHorizontalScroll() {
-                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                    gsap.registerPlugin(ScrollTrigger);
-                    gsap.to('.hero-section', {
-                        '--bg-scale': 0.95,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: ".hero-section",
-                            start: "top top",
-                            end: "bottom top",
-                            scrub: true,
-                        }
-                    });
-                    // Horizontal Scroll
-                    const horizontalContent = document.querySelector('.horizontal-content');
-                    const horizontalTween = gsap.to(horizontalContent, {
-                        x: () => - (horizontalContent.scrollWidth - document.documentElement.clientWidth) + "px",
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: ".horizontal-scroll-container",
-                            start: "top top",
-                            end: () => "+=" + (horizontalContent.scrollWidth - document.documentElement.clientWidth),
-                            pin: true,
-                            scrub: 1,
-                            invalidateOnRefresh: true,
-                        }
-                    });
-                    // Active Nav Link logic
-                    const navLinks = gsap.utils.toArray('.nav-link');
-                    const sections = gsap.utils.toArray('.content-panel');
-                    sections.forEach(section => {
-                        ScrollTrigger.create({
-                            trigger: section,
-                            start: "left center",
-                            end: "right center",
-                            horizontal: true,
-                            containerAnimation: horizontalTween,
-                            onToggle: self => self.isActive && setActive(section)
-                        });
-                    });
-                    function setActive(activeSection) {
-                        navLinks.forEach(link => {
-                            if (link.hash === `#${activeSection.id}`) {
-                                link.classList.add('active');
-                            } else {
-                                link.classList.remove('active');
-                            }
-                        });
+                const scrollToTopBtn = document.querySelector('.scroll-to-top');
+                const logoLink = document.querySelector('.header-logo');
+
+                lenis.on('scroll', e => {
+                    if (e.animatedScroll > window.innerHeight) {
+                        scrollToTopBtn.classList.add('visible');
+                    } else {
+                        scrollToTopBtn.classList.remove('visible');
                     }
+                });
+
+                const scrollToTop = e => {
+                    if (e) e.preventDefault();
+                    lenis.scrollTo(0, { duration: 2 });
+                };
+
+                scrollToTopBtn.addEventListener('click', scrollToTop);
+                scrollToTopBtn.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') scrollToTop(e);
+                });
+                
+            }
+        }
+
+        // ====================================================================
+        // === GSAP Animations and Horizontal Scroll Logic ====================
+        // ====================================================================
+        function enableGSAP() {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof ScrollToPlugin !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+                // Elements
+                const horizontalContent = document.querySelector('.horizontal-content');
+                const navLinks = gsap.utils.toArray('.nav-link');
+                const panels = gsap.utils.toArray('.content-panel');
+                const headerLogo = document.querySelector('.header-logo');
+
+                // Set initial active nav link
+                setActive('stem-racing');
+
+                // Hero background scale on scroll
+                gsap.to('.hero-section', {
+                    '--bg-scale': 0.95,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".hero-section",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true,
+                    }
+                });
+
+                // Horizontal scroll tween
+                const horizontalTween = gsap.to(horizontalContent, {
+                    x: () => - (horizontalContent.scrollWidth - document.documentElement.clientWidth) + "px",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".horizontal-scroll-container",
+                        start: "top top",
+                        end: () => "+=" + (horizontalContent.scrollWidth ),
+                        pin: true,
+                        scrub: 1,
+                        invalidateOnRefresh: true,
+                    }
+                });
+
+                // ScrollTriggers to toggle active nav links
+                panels.forEach(panel => {
+                    ScrollTrigger.create({
+                        trigger: panel,
+                        start: "left center",
+                        end: "right center",
+                        horizontal: true,
+                        containerAnimation: horizontalTween,
+                        onToggle: self => {
+                            if (self.isActive) setActive(panel.id);
+                        }
+                    });
+                });
+
+                function setActive(id) {
+                    navLinks.forEach(link => {
+                        if (link.hash === `${id}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+                
+                // === FIX for Navigation Links to Horizontal Panels ===
+                navLinks.forEach(link => {
+                    link.addEventListener('click', e => {
+                        e.preventDefault();
+                        const targetId = link.hash.substring(1);
+                        const targetPanel = document.getElementById(targetId);
+
+                        if (!targetPanel) return;
+
+                        if (targetPanel.closest('.horizontal-scroll-container')) {
+                            // It's a horizontal panel
+                            const horizontalScrollPos = targetPanel.offsetLeft;
+                            
+                            gsap.to(horizontalTween, {
+                                progress: horizontalScrollPos / horizontalContent.scrollWidth,
+                                ease: "power2.inOut",
+                                duration: 1.2,
+                                onUpdate: () => ScrollTrigger.update(),
+                            });
+                        } else {
+                            // It's a standard vertical section
+                            gsap.to(window, {
+                                scrollTo: targetPanel,
+                                duration: 1.2,
+                                ease: "power2.inOut",
+                                onUpdate: () => ScrollTrigger.update(),
+                            });
+                        }
+                    });
+                });
+                
+                // Add click handler for the logo link to scroll to the top hero section
+                headerLogo.addEventListener('click', e => {
+                    e.preventDefault();
+                    gsap.to(window, {
+                        scrollTo: '#home',
+                        duration: 1.2,
+                        ease: "power2.inOut",
+                    });
+                });
+
+                // Sponsor grid fade-in animation
+                const sponsorBoxes = document.querySelectorAll('.sponsor-logo-box');
+                if (sponsorBoxes.length > 0) {
+                    gsap.from(sponsorBoxes, {
+                        opacity: 0,
+                        y: 30,
+                        stagger: 0.1,
+                        ease: "power2.out",
+                        duration: 0.8,
+                        scrollTrigger: {
+                            trigger: ".sponsor-grid",
+                            start: "top 80%",
+                            toggleActions: "play none none none",
+                        }
+                    });
                 }
             }
+        }
 
-            // Wait for libraries to load (deferred scripts)
-            setTimeout(() => {
-                enableLenisAndScrollToTop();
-                enableGSAPHorizontalScroll();
-            }, 500);
-        });
-    </script>
+        // ====================================================================
+        // === Initialize All Scripts =========================================
+        // ====================================================================
+        setTimeout(() => {
+            enableLenisAndScrollToTop();
+            enableGSAP();
+        }, 500);
+
+    });
+</script>
 </body>
 </html>
